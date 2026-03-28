@@ -23,6 +23,7 @@ def get_preds(model, T, X):
     t_flat = torch.tensor(T.flatten(), dtype=torch.float32).unsqueeze(1)
     x_flat = torch.tensor(X.flatten(), dtype=torch.float32).unsqueeze(1)
 
+    model.eval()
     with torch.no_grad():
         u_pred = model(t_flat, x_flat).numpy().reshape(T.shape)
     return u_pred

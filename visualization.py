@@ -39,6 +39,8 @@ def exact_vs_approximate(T, X, u_exact, u_pred, alpha, curve_fit=False):
     t_snaps = [0.0, 0.25, 0.5, 0.75, 1.0]
     if curve_fit:
         fit_data = fit_snapshots(u_pred, T, X, alpha)
+        for key, val in fit_data.items():
+            print(dict(zip("a0 b0 b1 c".split(), val["popt"])))
     for t_snap in t_snaps:
         idx = np.argmin(np.abs(T[:, 0] - t_snap))
         x_vals = X[idx]
