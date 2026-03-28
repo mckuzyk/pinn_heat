@@ -11,11 +11,6 @@ np.random.seed(42)
 ALPHA = 0.5
 
 
-# 1D Heat equation: u_t = a u_xx
-def exact_solution(t, x, alpha=0.5):
-    return np.exp(-(np.pi**2) * alpha * t) * np.sin(np.pi * x)
-
-
 class PINN(nn.Module):
     """
     Defines the data informed neural network, denoted u(t, x) in Raissi et al
@@ -61,7 +56,7 @@ def sample_boundary_and_ic(n_boundary, n_ic):
 def sample_collocation_points(n_samples):
     """
     A random sampling of pairs (t, x) within the specified domain, in this case
-    x in [0,1], y in [0,1], where we don't know the function u(t, x), but we
+    x in [0,1], t in [0,1], where we don't know the function u(t, x), but we
     do know the physics that dictates the solution!
     """
     t_samples = torch.rand(n_samples, 1, requires_grad=True)
@@ -136,8 +131,17 @@ def train(
 
 
 if __name__ == "__main__":
+    from analysis import build_grid, get_preds, exact_solution
+    from visualization import exact_vs_approximate, plot_loss
+
     model = PINN(32, 4)
     loss = train(model, epochs=5000, n_collocation=1000, lambda_f=1, lambda_u=1)
-    plt.plot(loss)
-    plt.yscale("log")
+
+    T, X = build_grid()
+    u_pred = get_preds(model, T, X)
+    u_exact = exact_solution(T, X)
+
+    fig = exact_vs_approximate(T, X, u_exact, u_pred, alpha=ALPHA, curve_fit=False)
+
+    fig2 = plot_loss(loss)
     plt.show()
