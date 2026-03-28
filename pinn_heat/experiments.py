@@ -1,6 +1,13 @@
 from config import ExperimentConfig
 
 EXPERIMENTS = {
+    "test": ExperimentConfig(
+        "test",
+        n_neurons=10,
+        n_collocation=1000,
+        optimizer="SGD",
+        lr=0.01,
+    ),
     "vanilla": ExperimentConfig(
         "vanilla",
         n_neurons=10,
