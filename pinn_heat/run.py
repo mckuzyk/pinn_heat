@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 
 def main(config):
     save_dir = Path("results") / config.name
+    print(f"Creating output directory {save_dir}")
     if save_dir.exists():
         raise FileExistsError(f"The path {save_dir} already exists")
     save_dir.mkdir(parents=True, exist_ok=False)
@@ -42,7 +43,8 @@ if __name__ == "__main__":
 
     if args.all:
         for name, config in EXPERIMENTS.items():
-            model, loss = train(config)
+            print(f"Running experiment {name}...")
+            main(config)
     else:
         config = EXPERIMENTS[args.experiment]
         main(config)
