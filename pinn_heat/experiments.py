@@ -1,4 +1,4 @@
-from config import ExperimentConfig
+from pinn_heat.config import ExperimentConfig
 
 EXPERIMENTS = {
     "test": ExperimentConfig(

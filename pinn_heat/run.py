@@ -1,10 +1,10 @@
 from pathlib import Path
 import argparse
 import torch
-from experiments import EXPERIMENTS
-from train import train
-import analysis
-import visualization as vis
+from pinn_heat.experiments import EXPERIMENTS
+from pinn_heat.train import train
+from pinn_heat import analysis
+from pinn_heat import visualization as vis
 import matplotlib.pyplot as plt
 
 

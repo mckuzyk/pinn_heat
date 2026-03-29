@@ -1,5 +1,5 @@
 import torch
-from model import (
+from pinn_heat.model import (
     PINN,
     sample_collocation_points,
     sample_boundary_and_ic,

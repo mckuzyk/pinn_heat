@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
-from analysis import l2_error, fit_snapshots
+from pinn_heat.analysis import l2_error, fit_snapshots
 
 
 def exact_vs_approximate(T, X, u_exact, u_pred, alpha, curve_fit=False):
