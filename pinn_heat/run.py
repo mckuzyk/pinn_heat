@@ -29,7 +29,7 @@ def main(config):
     fig2.tight_layout()
 
     fig1.savefig(save_dir / "results.png", dpi=300, bbox_inches="tight")
-    fig2.savefig(save_dir / "total_loss.png", dpi=300, bbox_inches="tight")
+    fig2.savefig(save_dir / "loss.png", dpi=300, bbox_inches="tight")
     config.save(save_dir / "config.json")
     torch.save(model.state_dict(), save_dir / "model_state_dict.pt")
     plt.show()
@@ -37,7 +37,7 @@ def main(config):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--experiment", choices=EXPERIMENTS.keys(), required=True)
+    parser.add_argument("--experiment", choices=EXPERIMENTS.keys())
     parser.add_argument("--all", action="store_true")
     args = parser.parse_args()
 

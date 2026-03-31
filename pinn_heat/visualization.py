@@ -84,12 +84,16 @@ def exact_vs_approximate(T, X, u_exact, u_pred, alpha, curve_fit=False):
     return fig
 
 
-def plot_loss(loss):
+def plot_loss(loss_dict):
     fig, ax = plt.subplots(figsize=(7, 4))
-    ax.semilogy(loss)
+    color = plt.cm.viridis(0.25)
+    ax.semilogy(loss_dict["data"], label="data loss", color=color, alpha=0.75)
+    color = plt.cm.viridis(0.85)
+    ax.semilogy(loss_dict["physics"], label="physics loss", color=color, alpha=0.75)
     ax.set_xlabel("Epoch")
-    ax.set_ylabel("Total loss (log scale)")
+    ax.set_ylabel("Loss (log scale)")
     ax.set_title("Training loss")
     ax.grid(True, alpha=0.3)
+    ax.legend()
     plt.tight_layout()
     return fig

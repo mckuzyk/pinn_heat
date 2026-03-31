@@ -28,7 +28,11 @@ def train(config):
     )
 
     model.train()
-    loss_history = []
+    loss_dict = {
+        "physics": [],
+        "data": [],
+        "full": [],
+    }
     for epoch in range(config.epochs):
         optimizer.zero_grad()
 
@@ -46,7 +50,9 @@ def train(config):
         optimizer.step()
         scheduler.step()
 
-        loss_history.append(loss.item())
+        loss_dict["physics"].append(loss_physics.item())
+        loss_dict["data"].append(loss_data.item())
+        loss_dict["full"].append(loss.item())
 
         if epoch % 100 == 0:
             print(
@@ -56,4 +62,4 @@ def train(config):
                 f"Loss (Phys): {loss_physics.item()} | "
             )
 
-    return model, loss_history
+    return model, loss_dict
