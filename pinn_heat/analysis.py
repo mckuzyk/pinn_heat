@@ -31,9 +31,13 @@ def get_preds(model, T, X):
 
 # --- Curve Fitting ------------------------------------------------------------
 def general_exact_solution(x, t, alpha):
-    def inner(x, a0, b0, b1, c):
-        beta = np.sqrt(c / alpha)
-        return a0 * np.exp(c * t) * (b0 * np.exp(beta * x) + b1 * np.exp(-beta * x))
+    def inner(x, b0, b1, c):
+        if c > 0:
+            beta = np.sqrt(c / alpha)
+            return np.exp(c * t) * (b0 * np.exp(beta * x) + b1 * np.exp(-beta * x))
+        else:
+            beta = np.sqrt(np.abs(c) / alpha)
+            return np.exp(c * t) * (b0 * np.cos(beta * x) + b1 * np.sin(beta * x))
 
     return inner
 
@@ -44,7 +48,7 @@ def fit_snapshots(
     X,
     alpha,
     t_snaps=[0.0, 0.25, 0.5, 0.75, 1.0],
-    p0=[0.2, -0.2, -0.2, 0.01],
+    p0=[-0.1, -0.05, 1e-6],
 ):
     fit_data = {}
     for t_snap in t_snaps:
