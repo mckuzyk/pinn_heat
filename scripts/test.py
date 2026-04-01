@@ -1,10 +1,11 @@
 from pinn_heat.experiments import EXPERIMENTS
-from pinn_heat.train import train
+from pinn_heat.model import PINN
 from pinn_heat import analysis
 from pinn_heat import visualization as vis
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import curve_fit
+import torch
 
 
 def build_fit_fun(x, t, alpha):
@@ -74,8 +75,9 @@ def plot_fits(T, X, t_snaps, u_pred, fit_data):
 
 
 t_snaps = [0.0, 0.25, 0.5, 0.75, 1.0]
-config = EXPERIMENTS["full_no_physics"]
-model, loss = train(config)
+config = EXPERIMENTS["full_no_physics_fine"]
+model = PINN(config.n_neurons, config.n_layers)
+model.load_state_dict(torch.load("results/full_no_physics_fine/model_state_dict.pt"))
 T, X = analysis.build_grid()
 u_exact = analysis.exact_solution(T, X, config.alpha)
 u_pred = analysis.get_preds(model, T, X)
@@ -83,7 +85,8 @@ u_pred = analysis.get_preds(model, T, X)
 fit_data = fit_snapshots(
     u_pred, T, X, config.alpha, t_snaps, p0=[1.0, np.pi**2 * config.alpha]
 )
-print(fit_data)
+for key, val in fit_data.items():
+    print(val["popt"])
 a_vals = []
 for t in t_snaps:
     a_vals.append(fit_data[t]["popt"][0])
