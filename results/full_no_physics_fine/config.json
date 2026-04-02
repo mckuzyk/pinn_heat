@@ -1,0 +1,24 @@
+{
+  "name": "full_no_physics_fine",
+  "alpha": 0.5,
+  "n_neurons": 32,
+  "n_layers": 4,
+  "lambda_u": 1.0,
+  "lambda_f": 0.0,
+  "n_collocation": 5000,
+  "n_ic": 100,
+  "n_bc": 100,
+  "epochs": 24000,
+  "lr": 0.001,
+  "optimizer": "Adam",
+  "optimizer_params": {
+    "lr": 0.0001
+  },
+  "scheduler": "StepLR",
+  "scheduler_params": {
+    "step_size": 5000,
+    "gamma": 0.1
+  },
+  "curve_fit": false,
+  "output_dir": "results"
+}
