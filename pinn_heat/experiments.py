@@ -57,6 +57,13 @@ EXPERIMENTS = {
         lambda_f=0.0,
         curve_fit=False,
     ),
+    "full_fine": ExperimentConfig(
+        "full_fine",
+        optimizer="Adam",
+        optimizer_params={"lr": 1e-4},
+        scheduler_params={"step_size": 5000, "gamma": 0.1},
+        epochs=24000,
+    ),
     "full_no_data_very_fine": ExperimentConfig(
         "full_no_data_very_fine",
         optimizer="Adam",
