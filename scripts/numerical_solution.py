@@ -4,6 +4,7 @@ u(0, x), u(t, 0), u(t, 1) as the prescribed boundary and initial
 conditions.
 """
 
+from pathlib import Path
 import numpy as np
 from scipy.sparse import diags
 from scipy.sparse.linalg import spsolve
@@ -151,4 +152,7 @@ results = solve_heat_1d(
 )
 
 fig = exact_vs_approximate(T, X, u_pred, results, config.alpha)
+fig.tight_layout()
+savedir = Path("results") / config.name
+fig.savefig(savedir / "numerical.png", dpi=300, bbox_inches="tight")
 plt.show()
